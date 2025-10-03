@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PorfolioProject</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="background-pattern">
+  <script src="script.js" defer></script>
+  <script src="script2.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Goldman:wght@400;700&family=Michroma&family=Share+Tech&display=swap" rel="stylesheet">
+
+  <section class="project-section">
+ 
+    <div class="left sticky-main">
+      <div class="container">
+        <h1 class="name">Sergio Lopez</h1>
+        <div class="small-container">
+          <div class="small-left">
+              <p>US Citizen</p>
+          </div>
+          <div class="divider"></div>
+          <div class="small-right">
+              <p>2yr to graduate</p>
+              <p>computer science enginering <span>+ Math minor</span></p>
+          </div>
+          </div>
+          <div class="socials-container">
+            <ion-icon
+              name="logo-instagram"
+              class="socials"
+              data-cursor="  contact me">
+            </ion-icon>
+      
+            <ion-icon
+              name="logo-github"
+              class="socials"
+              data-cursor="  contact me">
+            </ion-icon>
+      
+            <ion-icon
+              name="logo-linkedin"
+              class="socials"
+              data-cursor="  contact me">
+            </ion-icon>
+      
+            <ion-icon
+              name="mail-unread-outline"
+              class="socials"
+              data-cursor="  contact me">
+            </ion-icon>
+          </div>
+
+
+      
+      
+        </div>
+    </div>
+  </div>
+
+<div class="right">
+  <div class="filter">
+
+    <div class="icon-wrapper" data-label="JavaScript"
+    data-cursor="i've worked with">
+      <ion-icon name="logo-javascript" class="icon" alt="JavaScript"></ion-icon>
+    </div>
+  
+    <div class="icon-wrapper" data-label="HTML"
+    data-cursor="i've worked with">
+      <ion-icon name="logo-html5" class="icon" alt="HTML"></ion-icon>
+    </div>
+  
+    <div class="icon-wrapper" data-label="CSS"
+    data-cursor="i've worked with">
+      <ion-icon name="logo-css3" class="icon" alt="CSS"></ion-icon>
+    </div>
+  
+    <div class="icon-wrapper" data-label="Python"
+    data-cursor="i've worked with">
+      <img src="./icons/python.png" class="icon" alt="Python">
+    </div>
+  
+  
+    <div class="icon-wrapper" data-label="C++"
+    data-cursor="i've worked with">
+      <img src="./icons/c- .png" class="icon" alt="C++">
+    </div>
+  
+  </div>
+ 
+    
+  <div class="cardText"></div><h2 class="project-title scrollbars-always ">Projects</h2><!--1-->
+  <!-- 1 | Shared preview panel (stays on screen, JS swaps its content) -->  
+
+<!-- 2 | All project cards -->
+<div class="cards-wrapper">
+
+
+
+
+   <aside id="preview" class="preview">
+    <button id="closePreview" aria-label="close preview" class="closePreview">✕</button>
+     <video id="prevVid" class="preview-player" muted loop playsinline></video>
+     <h3  id="prevTitle"></h3>
+     <p   id="prevDesc"></p>
+     <p   id="prevTools" class="tools"></p>
+   </aside>
+
+
+   <div class="project-card"
+   data-title="SLANDS"
+   data-desc ="I’ve teamed up with classmates to launch a startup that builds websites and software for local businesses. Our goal is to apply our skills to create real impact while gaining hands-on experience and helping cover our college expenses."
+   data-tools="Goal: support to local businesses, and getting experience through building real life projects that have a positive impact in our community"
+   data-video="./img/slands.mp4">
+ <h3>SLANDS</h3>
+ </div>
+
+
+    <!-- Weather App -->
+    <div class="project-card"
+    data-title="Weather App (Debugging)"
+    data-desc ="Project of my own, its just for learning, and to help me have a better system routine, I broke it, trying to fix it at the moment"
+    data-tools="Goal: work and learn about API’s which lead to a lot of learning on backend/front-end and the connection between both. A project that help me understand more"
+    data-video="./img/wheaterapp.mp4">
+ <h3>WeatherApp</h3>
+</div>
+ 
+   <!-- Battleship -->
+   <div class="project-card"
+        data-title="Battleship Game + Antiderivatives"
+        data-desc="Projects like my Battleship game and antiderivative solver started as homework but grew into a deeper understanding of the subjects by coding their logic. They showed me how essential it is to truly grasp a concept when translating it into code."
+        data-tools ="My goal with this project and college in general is to build strong fundamentals, that allow me to really know my stuff, and theres more to come"
+        data-video="./img/battleship.mp4">
+     <div class="doubleProject">
+       <h3 class="doublePtext">Battleship +</h3>
+       <h3 class="doublePtext">Antiderivative</h3>
+     </div>
+   </div>
+
+ 
+ 
+   <!-- Placeholder / Coming soon -->
+   <div class="project-card"
+   data-title="BOSS/Business Opportunity software search"
+   data-desc="Software that searches and filters recently sold homes to filter properties most likely to need remodeling. It helps local service businesses (e.g., roofing) target high-intent leads right after a purchase."
+   data-tools="Goal: an example of the data-driven tools I’m building with SLANDS to deliver real value to local businesses. "
+   data-video="./img/boss.mp4";>
+
+     <h3>Next Project</h3>
+   </div>
+
+   <div class="project-card"
+   data-title="More Projects Coming Soon"
+   data-desc="I’m always building and experimenting. New projects are in progress and will be added here shortly."
+   data-tools="Stay tuned for fresh updates and demos"
+   data-video="./img/more.mp4">
+
+     <h3>More coming soon…</h3>
+   </div>
+
+  </div>
+
+
+
+<script>
+  // Prevent default scrollbar behavior
+  document.addEventListener('DOMContentLoaded', function() {
+    // For the filter scrollbar
+    const filter = document.querySelector('.filter');
+    filter.addEventListener('wheel', function(e) {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        this.scrollLeft += e.deltaY;
+      }
+    });
+    
+    // Make sure videos play on hover
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      const video = card.querySelector('video');
+      if (video) {
+        card.addEventListener('mouseenter', () => {
+          video.play();
+        });
+        card.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      }
+    });
+  });
+</script>
+</section>
+
+<section class="about-section scroll-reveal">
+    
+  <div class="about-container">
+  <!-- <div class="container-about"> -->
+    
+
+    <div class="img-smallcontainer"> 
+    <div class="border-animation">
+    <img src="img/aboutme.png"
+         class="about-me"
+         alt="Photo of Sergio"> 
+    </div>
+    <h1 class="about-title">WHO AM I?</h1>
+  </div>
+
+
+
+
+  <div class="options" id="options">
+    <button
+      class="option is-active"
+      data-target="anyone"
+      data-cursor="clic • clic • clic">
+      <span class="reveal">For Anyone</span>
+    </button>
+
+      
+    <button
+      class="option"
+      data-target="engineers"
+      data-cursor="clic   • clic   • clic  ">
+      <span class="reveal">Mentors</span>
+    </button>
+  
+    <button
+      class="option"
+      data-target="recruiters"
+      data-cursor="clic • clic • clic">
+      <span class="reveal">Recruiters</span>
+    </button>
+  
+    <button
+      class="option"
+      data-target="design-directors"
+      data-cursor="clic   • clic   • clic  ">
+      <span class="reveal">Design Directors</span>
+    </button>
+  
+    <button
+      class="option"
+      data-target="product-managers"
+      data-cursor="clic   • clic   • clic  ">
+      <span class="reveal">Product Managers</span>
+    </button>
+
+  </div>
+  
+
+    <div class="texts" id="texts">
+      <h1 class="text is-visible" data-id="anyone"><span class="reveal">
+        I grew up in a small town in Mexico and moved to the U.S. in 2018. I never imagined facing this sudden change and unpredictability in my life. However, I made a million adjustments to adapt to a new country. I learned a new language, a new culture, and a different system.
+      </span></h1>
+        <h1 class="text is-visible" data-id="anyone"><span class="reveal">
+          I didn’t do it alone though. I guide myself by Stoic and Kaizen philosophy. The wisdom that my parents, mentors, and people who believed in me gifted to me helped me get this far. I’m grateful to them for their trust in me, and made it my purpose to leave the world better than how I found it because of them.
+      </span></h1> 
+
+
+      <h1 class="text" data-id="engineers"><span class="reveal">
+        I am still be early in my journey, but I’m fully committed to learning, contributing, and improving every day. I value feedback, collaboration, and working with people who raise the bar. My goal is to earn trust through consistency, effort, and continuous growth.
+      </span></h1>
+          <h1 class="text" data-id="engineers"><span class="reveal"> 
+            Right now, learning is my top priority, but I also want to bring value to the team wherever I can. I’m not afraid of hard work, and I’m here to put in the time, take initiative, and grow into someone others can count on. I want to learn from those around me, add to the team in any way possible, and help build something we can all be proud of.
+          </span></h1>
+
+
+      <h1 class="text" data-id="recruiters"><span class="reveal">
+        I am committed to be great at mobile app development and become an expert in building secure and scalable applications. I have dedicated my time outside of work and school into learning through project creation and understanding the basics of networking and cybersecurity.
+      </span></h1> 
+        <h1 class="text" data-id="recruiters"><span class="reveal">
+          I’m aware of the major shifts happening in this industry specially with AI and how competitive opportunities are. However, I didn’t sign up for this career because I thought it was going to be easy. I will do anything to not let down those who are rooting for me. 
+        </span></h1>
+        <h1 class="text" data-id="recruiters"><span class="reveal">
+          +find myself amazed the ways AI can help you have a second brain to discuss and optimize.
+        </span></h1>
+
+      
+      <h1 class="text" data-id="design-directors"><span class="reveal">
+        I may have not  done much of this type of work, but I am curious and I want to learn. Above all, I want the team to win and will do my best to make that happen. I never thought of myself as someone with natural talent, but I am someone who makes up for this with hard work and dedication. </span></h1>
+      <h1 class="text" data-id="design-directors"><span class="reveal">Over time, human behavior has become something I dive into during my downtime, It's become the lens I see design through: not just how things look, but how they make people feel, decide, and act.</span></h1>
+      
+      
+      <h1 class="text" data-id="product-managers"><span class="reveal">From my sports years to my professional jobs, one thing has stayed consistent, I'm a team player. I give everything to help my team move forward, and I want us to win. I know that to work with a team you truly respect and admire, you have to earn it, not just with effort, but with results.</span></h1>
+        <h1 class="text" data-id="product-managers"><span class="reveal">I may have not done much of this type of work, but I am curious and I want to learn. Above all, I want the team to win and will do my best to make that happen. I never thought of myself as someone with natural talent, but I am someone who makes up for this with hard work and dedication.</span></h1>
+     
+    </div> <!-- close texts -->
+
+    
+  </div>
+ 
+
+
+
+  <!-- main JS -->
+  
+
+</section> 
+
+<section class="skills-section">
+
+
+  <div class="skills-container">
+    <div class="skills box">
+    
+      <h1 class="title-skills">My biggest takeaways</h1>
+      <h1 class="title-skills2">University of Arkansas</h1>
+
+      <div class="img-wrap2">
+        <img src="img/University of Arkansas Seal.png" class="skills-img" alt="seal" />
+      </div>
+
+
+        <p>Carried 10-12 credit hours while working 33 hrs/week and amking time for sides projects.</p>
+        <p class="skills-list">Forever grateful for the opportunity to earn an education in one of the best education systems, in one of the best countries, and to study something I find myself passionate about.  This is some of what I have learned</p>
+        <div class="skills-container-small">
+         <div class="text-wrap">
+            <ul class="skills-list">
+              <li><span class="core-skills">Systems thinking </span> I find amazing how every part influences the others and respect the complexity rather than oversimplifying; that awareness guides my decision making, from real life to software.</li>
+              <li><span class="core-skills">Problem solving </span>math, code, and team projects taught me to slow down, figure out what’s actually being asked, test different angles (even the weird ones) and keep going until it clicks and works for real.</li>
+              <li><span class="core-skills">Time managment </span>balancing a full course load, projects, and work forced me to map out every week, protect deep-work blocks, and work ahead is the only way to meet schedule.</li>
+             </ul>
+        </div>
+        <div class="img-wrap">
+          <img src="img/University of Arkansas Seal.png" class="skills-img" alt="seal" />
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="skills box end">
+    
+      <h1 class="title-skills">My biggest takeaways</h1>
+      <h1 class="title-skills2">Starbucks Coffee Company</h1>
+      <p class="skills-list">This was my main job through college, where I earned three promotions in three years and had the chance to consistently practice and improve my soft skills in a fast-paced, team-driven environment.
+      </p>
+      <div class="skills-container-small">
+        <div class="img-wrap3">
+          <img src="img/StarbucksLogo.png" class="skills-img-starbucks" alt="seal" />
+        </div>
+       <div class="text-wrap">
+          <ul class="skills-list">
+            <li><span class="core-skills">Communication and collaboration </span>
+              Clear communication under pressure was critical, with everyone and across all roles. I learned working cross functionality and by doing your best in your position directly helps others succeed in theirs.
+            </li>
+            <li><span class="core-skills">Adaptability and prioritization </span> No two days were the same. I had to adapt quickly to equipment failures, last-minute rushes, and team members with different personalities and experience levels. Learning how to prioritize tasks on the fly often made the difference between a smooth day or a chaotic one.</li>
+            <lu><li><span class="core-skills">Leadership </span> I had the opportunity to lead and also observe leaders. some incredible, some not so much. Each experience taught me something that shaped how I now approach leadership:</li>
+              <div class="leadership-list">
+              <li class="leadership">You can plan a pretty picnic but, you can’t predict the weather</li>
+              <li class="leadership">You must identify  and control your emotional triggers</li>
+              <li class="leadership">A great leader is also a great follower</li>
+              <li class="leadership">Kindness most of the time will help get the best results</li>
+              <li class="leadership">Communication is kindness</li>
+          </lu>
+          </div>
+          </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+  </div>
+
+
+  
+
+  
+</section>
+
+
+ 
+
+  <!-- Custom cursor (desktop only) -->
+<div class="cursor-follower" hidden>
+  <svg viewBox="0 0 120 120" class="cue-svg">
+    <defs>
+      <path id="circle"
+            d="M60 60 m-50 0 a50 50 0 1 1 100 0 a50 50 0 1 1-100 0"/>
+    </defs>
+
+    <!-- center dot -->
+    <circle cx="60" cy="60" r="5" fill="#F7F56D" />
+
+    <!-- circular text -->
+    <text font-family="inherit"
+          font-size="14"
+          letter-spacing="4"
+          fill="#F7F56D">
+      <textPath id="cursorText"      
+                href="#circle"
+                startOffset="0%">
+        SCROLL • SCROLL • SCROLL •  
+      </textPath>
+    </text>
+  </svg>
+</div>
+  
+  <script>
+    if (!CSS.supports('animation-timeline:view()')){
+      const io=new IntersectionObserver(
+        es=>es.forEach(e=>{
+          if(e.isIntersecting)e.target.classList.add('is-visible');
+        }),
+        {threshold:.35}
+      );
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    }
+    </script>
+    <script src="preview.js"></script>
+  </body>
+  
+
+</html>
+
