@@ -173,12 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
     appendMessage(text, "user");
     setLoading(true);
 
-    // show typing while waiting
+  
     addTypingIndicator();
 
     const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
       ? "http://localhost:3001/api/chat"
-      : "https://YOUR-DEPLOYED-BACKEND-URL/api/chat";
+      : "https://sergiowork.onrender.com";
 
     try {
       const res = await fetch(API_URL, {
