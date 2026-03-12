@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Typewriter Effect (when reply arrives) -----
+  // ----- Typewriter Effect (when reply arrives) -----
   function typeMessage(text, speed = 15) {
     if (!hintRemoved) {
       const hint = messages.querySelector(".chat-hint");
@@ -178,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
       ? "http://localhost:3001/api/chat"
-      : "https://sergiowork.onrender.com";
+      : "https://sergiowork.onrender.com/api/chat";
 
     try {
       const res = await fetch(API_URL, {
@@ -190,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Server error");
       const data = await res.json();
 
-      // remove typing + type the response
+      //type the response
       removeTypingIndicator();
       typeMessage(data.reply, 15);
 
@@ -201,9 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setLoading(false);
       input.focus();
     }
-  }
-
-  // Click Send button
+  }  // Click Send button
   sendBtn.addEventListener("click", sendMessage);
 
   // Press Enter in input
