@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursor Demo</title>
+
+  <!-- ALL THE CSS -->
+  <style>
+    /* demo background so you can see the cursor */
+    body{
+        display:flex;
+  flex-direction: column;
+    }
+
+    /* cursor wrapper */
+    .cursor-follower{
+      position:fixed;
+      top:0; left:0;
+      width:60px; height:60px;           /* keep under 128 px */
+      transform:translate(-50%, -50%);   /* center on pointer */
+      pointer-events:none;               /* don’t block clicks */
+    }
+
+    /* optional spin */
+    .cue-svg{
+      width:100%; height:100%;
+      animation:spin 12s linear infinite;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- ANY PAGE CONTENT HERE -->
+  <h1 style="color:#FFF8E8; padding:4rem;">Scroll to test custom cursor</h1>
+
+  <!-- CURSOR GRAPHIC -->
+  <div class="cursor-follower">
+    <svg viewBox="0 0 120 120" class="cue-svg">
+      <defs>
+        <path id="circle"
+              d="M60 60 m-50 0 a50 50 0 1 1 100 0 a50 50 0 1 1-100 0"/>
+      </defs>
+
+      <!-- arrow -->
+      <!-- replace the old polygon -->
+      <circle cx="60" cy="60" r="5" fill="#F7F56D" />
+
+
+      <!-- circular text -->
+      <text font-family="inherit"
+            font-size="16"
+            letter-spacing="4"
+            fill="#F7F56D">
+        <textPath href="#circle" startOffset="0%">
+          SCROLL • SCROLL • SCROLL •
+        </textPath>
+      </text>
+    </svg>
+  </div>
+
+  <!-- ALL THE JS -->
+  <script>
+    const follower = document.querySelector('.cursor-follower');
+
+    // track mouse
+    window.addEventListener('mousemove', e => {
+      follower.style.top  = `${e.clientY}px`;
+      follower.style.left = `${e.clientX}px`;
+    });
+
+    // pause spin for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelector('.cue-svg').style.animation = 'none';
+    }
+  </script>
+</body>
+</html>
