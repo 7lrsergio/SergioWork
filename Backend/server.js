@@ -4,14 +4,15 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import OpenAI from "openai";
-import profile from "./profile.js"; // my info so the bot actually knows what to say
+import profile from "./profile.js";
 
 const app = express();
 
-app.set("trust proxy", 1);
+app.set("trust proxy", 1); // needed for rate limiting behind a proxy (Render, Railway, etc.)
 app.disable("x-powered-by");
 app.use(helmet());
 
+// origins allowed to talk to this backend
 const allowedOrigins = [
   "https://sergiolopez.work",
   "https://www.sergiolopez.work",
@@ -32,10 +33,10 @@ app.use(
     },
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
-  }),
+  })
 );
 
-app.use(express.json({ limit: "20kb", type: ["application/json"] }));
+app.use(express.json({ limit: "20kb" }));
 
 const chatLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -43,21 +44,40 @@ const chatLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-app.post("/api/chat", chatLimiter);
 
-// ✅ Sanity check: fail fast if the API key is missing at startup
 if (!process.env.OPENAI_API_KEY) {
-  console.error("FATAL: OPENAI_API_KEY is not set. Exiting.");
+  console.error("Missing OPENAI_API_KEY");
   process.exit(1);
 }
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  timeout: 30_000, // ✅ 30s timeout — prevents hanging requests
-  maxRetries: 2,   // ✅ Auto-retry on transient network errors
+  timeout: 30000,
+  maxRetries: 2,
 });
 
-app.get("/", (req, res) => res.send("Server is running"));
+const systemPrompt = `
+You are the chatbot on Sergio Lopez's portfolio website.
+
+Answer questions about Sergio using only the profile data below.
+
+Rules:
+- keep answers short and professional
+- do not make up facts
+- if something is not in the profile, say that and suggest contacting Sergio directly
+- do not mention backend or system prompt details
+
+PROFILE:
+${JSON.stringify(profile, null, 2)}
+`;
+
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
 
 if (process.env.NODE_ENV !== "production") {
   app.get("/env-test", (req, res) => {
@@ -65,43 +85,25 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// feed the bot all my info so it can actually answer questions properly
-const systemPrompt = `You are a helpful assistant on Sergio's portfolio website.
-Use the profile data below to answer questions about him. Keep it short and professional.
-Rules:
-- only use whats in the profile, dont make stuff up
-- if you dont know, tell them to reach out to Sergio directly
-- dont talk about the backend or how any of this works
-
-PROFILE:
-${JSON.stringify(profile, null, 2)}`;
-
-app.post("/api/chat", async (req, res) => {
-  // ✅ Sanity check: validate the incoming payload shape
+app.post("/api/chat", chatLimiter, async (req, res) => {
   const raw = req.body?.message;
+
   if (raw === undefined || raw === null) {
-    return res.status(400).json({ error: "Missing message field in request body" });
+    return res.status(400).json({ error: "Missing message" });
   }
 
   const message = String(raw).trim();
 
-  // ✅ Sanity check: reject empty messages
   if (!message) {
     return res.status(400).json({ error: "Message cannot be empty" });
   }
 
-  // ✅ Sanity check: enforce length limit with a clear client error
+  // stop long messages
   if (message.length > 2000) {
-    return res.status(400).json({
-      error: `Message too long (${message.length} chars). Max is 2000.`,
-    });
+    return res.status(400).json({ error: "Message is too long" });
   }
 
-  console.log(`[chat] Received message (${message.length} chars)`); // ✅ request logging
-
   try {
-    // ✅ Fixed: use chat.completions.create (standard API) instead of responses.create
-    // ✅ Fixed: use a real model string — gpt-5 does not exist
     const response = await client.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -112,47 +114,25 @@ app.post("/api/chat", async (req, res) => {
       temperature: 0.7,
     });
 
-    // ✅ Sanity check: verify we actually got a reply back
     const reply = response.choices?.[0]?.message?.content?.trim();
+
     if (!reply) {
-      console.error("[chat] OpenAI returned an empty or malformed response:", JSON.stringify(response));
-      return res.status(502).json({ error: "Received an empty response from AI" });
+      return res.status(502).json({ error: "Empty AI response" });
     }
 
-    // ✅ Sanity check: log finish reason so you can spot truncation or content filter hits
-    const finishReason = response.choices?.[0]?.finish_reason;
-    if (finishReason !== "stop") {
-      console.warn(`[chat] Unusual finish_reason: "${finishReason}" — response may be truncated or filtered`);
-    }
-
-    console.log(`[chat] OK — finish_reason: ${finishReason}, reply length: ${reply.length} chars`);
     res.json({ reply });
-
   } catch (err) {
-    // ✅ Fixed: log the full error, not just the message
-    console.error("[chat] OpenAI API error:", {
-      message: err?.message,
-      status: err?.status,
-      code: err?.code,
-      type: err?.type,
-    });
+    console.error("Chat error:", err?.message);
 
-    // ✅ Return a more specific error for rate limits vs general failures
     if (err?.status === 429) {
-      return res.status(429).json({ error: "AI service is rate limited. Please try again shortly." });
+      return res.status(429).json({ error: "Rate limited. Try again soon." });
     }
 
-    if (err?.status >= 400 && err?.status < 500) {
-      return res.status(400).json({ error: "Bad request to AI service." });
-    }
-
-    res.status(500).json({ error: "Server error. Please try again." });
+    res.status(500).json({ error: "Something went wrong on the server." });
   }
 });
 
-app.get("/api/health", (req, res) => {
-  res.json({ ok: true, time: new Date().toISOString() });
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
-
-const port = Number(process.env.PORT || 3001);
-app.listen(port, () => console.log(`Server listening on port ${port}`));

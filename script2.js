@@ -43,26 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
     widget.classList.toggle("is-open1");
   }
 
-  // 1) click button -> toggle
+  // click button -> toggle
   toggle.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleWidget();
   });
 
-  // 2) close button
+  // close button
   close.addEventListener("click", (e) => {
     e.stopPropagation();
     closeWidget();
   });
 
-  // 3) click anywhere else -> close (optional but feels nice)
+  // click anywhere else -> close (optional but feels nice)
   document.addEventListener("click", (e) => {
     if (!widget.classList.contains("is-open")) return;
     if (!widget.classList.contains("is-open1")) return;
     if (!widget.contains(e.target)) closeWidget();
   });
 
-  // 4) ESC key closes
+  // ESC key closes
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeWidget();
   });
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const div = document.createElement("div");
-    div.classList.add("chat-message", sender); // "user" or "bot"
+    div.classList.add("chat-message", sender); // "user" 
     div.textContent = text;
     messages.appendChild(div);
     scrollToBottom();
@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typing) typing.remove();
   }
 
-  // ----- Typewriter Effect (when reply arrives) -----
   // ----- Typewriter Effect (when reply arrives) -----
   function typeMessage(text, speed = 15) {
     if (!hintRemoved) {
@@ -181,6 +180,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ? "http://localhost:3001/api/chat"
       : "https://sergiowork.onrender.com/api/chat";
 
+    // sanity check: log which URL is being used and that the request is firing
+    console.log("[sanity] hostname:", window.location.hostname);
+    console.log("[sanity] API_URL:", API_URL);
+    console.log("[sanity] sending message:", text);
+
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -188,24 +192,40 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ message: text }),
       });
 
-      if (!res.ok) throw new Error("Server error");
+      // sanity check: log what the server returned
+      console.log("[sanity] response status:", res.status, res.statusText);
+
+      if (!res.ok) {
+        // sanity check: log the raw response body on failure
+        const errBody = await res.text();
+        console.error("[sanity] server returned non-ok response body:", errBody);
+        throw new Error("Server error");
+      }
+
       const data = await res.json();
 
-      //type the response
+      // sanity check: confirm we got a reply field back
+      console.log("[sanity] reply received:", data.reply ? `${data.reply.slice(0, 60)}...` : "(empty)");
+
+
       removeTypingIndicator();
       typeMessage(data.reply, 15);
 
     } catch (err) {
+      // sanity check: log the full error so we know exactly what broke
+      console.error("[sanity] fetch failed:", err.message, err);
       removeTypingIndicator();
       appendMessage("Sorry, something went wrong. Try again later.", "bot");
     } finally {
       setLoading(false);
       input.focus();
     }
-  }  // Click Send button
+  }
+
+  // Click Send button
   sendBtn.addEventListener("click", sendMessage);
 
-  // Press Enter in input
+
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") sendMessage();
   });
