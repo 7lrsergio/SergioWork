@@ -1,0 +1,138 @@
+#include <iostream>
+  using namespace std;
+  #include <limits>
+  
+  int main() {
+    int answer;
+    int scoreCount = 0;
+    int QuestionCount=0;
+    double grade;
+  
+  
+    cout << "Q1: How do we declare a variable in C++ if the variable is 'n'?\n";
+    cout << "1) int n;\n";
+    cout << "2) var n;\n";
+    cout << "3) let n;\n";
+    cout << "4) define n;\n";
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    if (cin.fail()) {                                 
+          cin.clear();                                  
+          cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+      }
+  
+    if (answer == 1) {
+      cout << "Great work!\n";
+      scoreCount += 1;
+      
+    } else {
+      cout << "Wrong :/\n";
+      
+    }
+  
+    // Question 2: Data types
+    cout << "\nQ2: Which of the following is used to store decimal numbers?\n";
+    cout << "1) int\n";
+    cout << "2) char\n";
+    cout << "3) float\n";
+    cout << "4) bool\n";
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    if (cin.fail()) {                                 
+          cin.clear();                                  
+          cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+      }
+  
+    if (answer == 3) {
+      cout << "Nice job!\n";
+      scoreCount += 1;
+      
+    } else {
+      cout << "Oops, not quite.\n";
+      
+    }
+  
+    // Question 3: Initialization
+    cout << "\nQ3: What does this line do?\n";
+    cout << "    int x = 10;\n";
+    cout << "1) It declares and initializes x\n";
+    cout << "2) It only declares x\n";
+    cout << "3) It compares x to 10\n";
+    cout << "4) It prints x\n";
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    if (cin.fail()) {                                 
+          cin.clear();                                  
+          cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+      }
+  
+    if (answer == 1) {
+      cout << "Correct!\n";
+      scoreCount += 1;
+      
+    } else {
+      cout << "Incorrect.\n";
+      
+    }
+  
+    // Question 4: Assignment vs comparison
+    cout << "\nQ4: Which one is the equality comparison operator in C++?\n";
+    cout << "1) =\n";
+    cout << "2) ==\n";
+    cout << "3) :=\n";
+    cout << "4) ===\n";
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    if (cin.fail()) {                                 
+          cin.clear();                                  
+          cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+      }
+  
+    if (answer == 2) {
+      cout << "That's right!\n";
+      scoreCount += 1;
+      
+    } else {
+      cout << "Nope, careful with assignment vs comparison!\n";
+      
+    }
+    
+      // Question 5: Code fragment and output
+    cout << "\nQ5: What does this code output?\n";
+    cout << "    int x = 4;\n";
+    cout << "    float y = 2.5;\n";
+    cout << "    int result = x + y;\n";
+    cout << "    cout << result;\n";
+    cout << "1) 6.5\n";
+    cout << "2) 6\n";
+    cout << "3) 4\n";
+    cout << "4) Compiler error\n";
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    if (cin.fail()) {                                 
+          cin.clear();                                  
+          cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+      }
+  
+    if (answer == 2) {
+      cout << "Correct! The float is truncated to an int before addition.\n";
+      scoreCount += 1;
+      
+    } else {
+      cout << "Nope! The float gets truncated, so x + 2 = 6.\n";
+      
+    }
+  
+  
+    // Grade calculation
+    grade = scoreCount / 5.0 * 100;
+    cout << "\nYour grade is " << grade << "%\n";
+  
+    if (grade >= 60) {
+      cout << "You passed!\n";
+    } else {
+      cout << "You failed. Keep practicing!\n";
+    }
+  
+    return 0;
+  }
