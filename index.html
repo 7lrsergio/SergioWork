@@ -40,6 +40,26 @@
   </div>
 </div>
 
+<!-- Theme Picker -->
+<div class="theme-picker" id="themePicker">
+  <button class="theme-picker-toggle" id="themeToggle" aria-label="Choose color theme">
+    <ion-icon name="sunny-outline"></ion-icon>
+  </button>
+
+  <div class="theme-slider-panel" id="themeSliderPanel">
+    <div class="theme-slider-row">
+      <input type="range" class="theme-slider" id="themeSlider" min="0" max="4" step="1" value="0" aria-label="Slide through color themes" />
+      <div class="theme-slider-ticks">
+        <span class="theme-tick" style="--tick-bg:#f2e9dc"></span>
+        <span class="theme-tick" style="--tick-bg:#cf5c36"></span>
+        <span class="theme-tick" style="--tick-bg:#ebcfb2"></span>
+        <span class="theme-tick" style="--tick-bg:#bfb8ad"></span>
+        <span class="theme-tick" style="--tick-bg:#0f110c"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
   
@@ -114,15 +134,28 @@
   
     <div class="icon-wrapper" data-label="Python"
     data-cursor="i've worked with">
-      <img src="./icons/python.png" class="icon" alt="Python">
+      <img src="./icons/python.png" class="icon icon-color" alt="Python">
+      <img src="./icons/python-black.png" class="icon icon-black" alt="Python">
     </div>
-  
-  
+
+
     <div class="icon-wrapper" data-label="C++"
     data-cursor="i've worked with">
-      <img src="./icons/c- .png" class="icon" alt="C++">
+      <img src="./icons/c- .png" class="icon icon-color" alt="C++">
+      <img src="./icons/c-black.png" class="icon icon-black" alt="C++">
     </div>
-  
+
+    <div class="icon-wrapper" data-label="GitHub"
+    data-cursor="i've worked with">
+      <ion-icon name="logo-github" class="icon" alt="GitHub"></ion-icon>
+    </div>
+
+    <div class="icon-wrapper" data-label="n8n"
+    data-cursor="i've worked with">
+      <img src="./icons/n8n.png" class="icon icon-color" alt="n8n">
+      <img src="./icons/n8n-black.png" class="icon icon-black" alt="n8n">
+    </div>
+
   </div>
  
     
@@ -130,7 +163,7 @@
   <!-- 1 | Shared preview panel (stays on screen, JS swaps its content) -->  
 
 <!-- 2 | All project cards -->
-<div class="cards-wrapper">
+<!-- <div class="cards-wrapper">
 
    <aside id="preview" class="preview">
     <button id="closePreview" aria-label="close preview" class="closePreview">✕</button>
@@ -147,10 +180,16 @@
    data-tools="Tech — HTML, CSS, JavaScript, API Integrations, Responsive Web Design."
    data-video="./img/slands2.mp4">
  <h3>SLANDS</h3>
+ </div> -->
+
+
+ <div class="project-card"
+ data-title="Pokémon-Inspired Game — Passion Project"
+ data-desc="Building a Pokémon-inspired game in Python to strengthen object-oriented programming, game logic, and problem-solving skills. Implemented core systems such as character interactions, battles, game state, and reusable classes while expanding the project as my Python skills improve."
+ data-tools="Tech — Python, Object-Oriented Programming, Encapsulation, Polymorphism."
+ data-video="./img/pokemon.mp4">
+ <h3>Pokémon-Inspired Game</h3>
  </div>
-
-
-
 
 
  
@@ -165,11 +204,11 @@ data-video="./img/CasaDöners.mp4">
  
    <!-- Barber -->
    <div class="project-card"
-   data-title="Barbershop — Online Booking System"
-   data-desc="Problem — The barbershop handled appointments manually, creating scheduling confusion and slow response times for customers. Solution — Developed a mobile-focused booking website that allows customers to easily schedule appointments through an online interface built for quick use on phones. Impact — Reduced manual scheduling and improved customer convenience by enabling clients to reserve appointments directly online."
-   data-tools="Tech — HTML, CSS, JavaScript, Booking Integration Tools."
-   data-video="./img/Barber1.mp4">
-   <h3>Barber + Booking system</h3>
+   data-title="Booking System — BarberStudio05"
+   data-desc="Built an automated booking system that reduced manual appointment coordination by roughly 2 hours per week while keeping infrastructure costs below $20/month. Designed the backend to minimize third-party dependencies and support future database integration and multi-barber expansion."
+   data-tools="Tech — JavaScript, n8n, REST APIs."
+   data-video="./img/barberstudio05.mp4">
+   <h3>Booking System — BarberStudio05</h3>
 </div>
 
 
@@ -184,11 +223,11 @@ data-video="./img/CasaDöners.mp4">
 
 
 <div class="project-card"
-data-title="Pokémon Game Engine — Java"
-data-desc="Problem — Design a system capable of managing interactive objects, player movement, and collisions within a tile-based scrolling map environment. Solution — Developed a Java-based 2D game engine inspired by classic Pokémon games, implementing a sprite system using inheritance and polymorphism along with collision detection and map interaction handling. Impact — Demonstrated the ability to design modular systems using clean architecture while managing game state, player interactions, and rendering logic."
-data-tools="Tech — Java, Object-Oriented Programming, Inheritance & Polymorphism, MVC Architecture, Game Loop Design."
+data-title="Pokémon-Inspired Game — Passion Project"
+data-desc="Building a Pokémon-inspired game in Python to strengthen object-oriented programming, game logic, and problem-solving skills. Implemented core systems such as character interactions, battles, game state, and reusable classes while expanding the project as my Python skills improve."
+data-tools="Tech — Python, Object-Oriented Programming, Encapsulation, Polymorphism."
 data-video="./img/pokemon.mp4">
-<h3>Pokémon Game Engine</h3>
+<h3>Pokémon-Inspired Game</h3>
 </div>
 
  <h3>Next Project</h3>

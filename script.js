@@ -119,3 +119,57 @@ revealSpans();
 
 
 // nogood yer
+
+/* ---------- theme picker (slider) ---------- */
+(() => {
+  const picker  = document.getElementById('themePicker');
+  const toggle  = document.getElementById('themeToggle');
+  const slider  = document.getElementById('themeSlider');
+  const label   = document.getElementById('themeSliderLabel');
+  if (!picker || !toggle || !slider) return;
+
+  const STORAGE_KEY = 'site-theme';
+
+  // index 0 = the site's original look (no data-theme override)
+  const THEMES = [
+    { key: null, name: 'Original' },
+    { key: 'a',  name: 'Theme A' },
+    { key: 'b',  name: 'Theme B' },
+    { key: 'c',  name: 'Theme C' },
+    { key: 'd',  name: 'Theme D' },
+  ];
+
+  function applyTheme(index) {
+    const theme = THEMES[index];
+    if (theme.key) {
+      document.documentElement.setAttribute('data-theme', theme.key);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    if (label) label.textContent = theme.name;
+  }
+
+  let startIndex = 0;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    const idx = THEMES.findIndex(t => t.key === saved);
+    if (idx > 0) startIndex = idx;
+  } catch (e) {}
+
+  slider.value = startIndex;
+  applyTheme(startIndex);
+
+  slider.addEventListener('input', () => {
+    const index = Number(slider.value);
+    applyTheme(index);
+    try { localStorage.setItem(STORAGE_KEY, THEMES[index].key || ''); } catch (e) {}
+  });
+
+  toggle.addEventListener('click', () => {
+    picker.classList.toggle('is-open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!picker.contains(e.target)) picker.classList.remove('is-open');
+  });
+})();

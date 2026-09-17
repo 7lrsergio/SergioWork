@@ -13,7 +13,7 @@
   position: fixed;
   top: 1rem;
   left: 1rem;
-  z-index: 1000; /* above most stuff */
+  z-index: 1009; /* above most stuff */
 }
 
 /* the circular button */
@@ -22,8 +22,8 @@
   height: 56px;
   border-radius: 9px;
   border: 1px solid rgba(255,255,255,.18);
-  background: #0f110c;              /* matches your site vibe */
-  color: #FFF8E8;
+  background: var(--theme-bg);              /* matches your site vibe */
+  color: var(--theme-fg);
   font-size: 1.2rem;
   cursor: pointer;
   position: fixed;
@@ -31,7 +31,7 @@
   right: 3rem;
 
   box-shadow: 0 12px 30px rgba(0,0,0,.35);
-  transition: transform .37s ease;
+  transition:  .45s ease, background-color .1s ease, color .1s ease;
 }
 
 .chat-widget.is-open1 .chat-fab{
@@ -50,6 +50,146 @@
   transform: scale(0.96);
 }
 
+/* ===== Theme picker (grows into a vertical bar, same trick as the chat fab) ===== */
+.theme-picker{
+  position: fixed;
+  z-index: 1001;
+}
+
+.theme-picker-toggle{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.18);
+  background: var(--theme-bg);
+  color: var(--theme-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: fixed;
+  bottom: 3rem;
+  right: calc(3rem + 256px + 1rem); /* left of the chat fab, same row */
+
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  transition: .45s ease, background-color .1s ease, color .1s ease;
+}
+
+.theme-picker.is-open .theme-picker-toggle{
+  border-radius: 16px;
+  width: 72px;
+  height: 240px;
+  color: #00000000; /* fade the icon out as the button grows, panel takes over */
+}
+
+.theme-picker-toggle ion-icon{
+  font-size: 1.4rem;
+}
+
+.theme-picker-toggle:active{
+  transform: scale(0.96);
+}
+
+.theme-slider-panel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  width: 68px;
+  height: 213px;
+  padding: 1rem .5rem .9rem;
+  border-radius: 16px;
+
+  position: fixed;
+  bottom: 3rem;
+  right: calc(3rem + 256px + 1rem);
+
+  color: var(--theme-fg);
+  overflow: hidden;
+
+  /* hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .55s ease, transform .6s ease;
+}
+
+.theme-picker.is-open .theme-slider-panel{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.theme-slider-label{
+  text-align: center;
+  font-size: .72rem;
+  letter-spacing: .04em;
+  color: var(--theme-fg);
+  opacity: .85;
+  transition: color .3s ease;
+}
+
+.theme-slider-row{
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: .5rem;
+  flex: 1;
+  width: 100%;
+  height: 13rem;
+}
+
+/* vertical range slider: value increases going up, original theme at the bottom */
+.theme-slider{
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 100%;
+  border-radius: 999px;
+  /* background: linear-gradient(to top, #0f110c, #bfb8ad, #ebcfb2, #cf5c36, #f2e9dc); */
+  cursor: pointer;
+  outline: none;
+}
+
+.theme-slider::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,.35);
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  cursor: pointer;
+}
+
+.theme-slider::-moz-range-thumb{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--theme-fg);
+  border: 2px solid rgba(0,0,0,.35);
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  cursor: pointer;
+}
+
+.theme-slider-ticks{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 0;
+}
+
+.theme-tick{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cursor-dot-color);
+  border: 1px solid rgba(255,255,255,.35);
+}
+
 /* the panel (hidden by default) */
 .chat-panel{
   position: fixed;
@@ -60,9 +200,9 @@
   max-width: calc(100vw - 2rem);
   height: 450px;
   max-height: calc(100vh - 2rem);
-/* 
+/*
   background: #071108; */
-  color: #FFF8E8;
+  color: var(--theme-fg);
   /* border: 1px solid rgba(255,255,255,.14); */
   border-radius: 16px;
   overflow: hidden;
@@ -96,7 +236,7 @@
 .chat-close{
   background: transparent;
   border: 0;
-  color: #FFF8E8;
+  color: var(--theme-fg);
   font-size: 1.2rem;
   cursor: pointer;
 }
@@ -120,13 +260,13 @@
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 10px;
   padding: .6rem .75rem;
-  color: #FFF8E8;
+  color: var(--theme-fg);
   outline: none;
 }
 
 .chat-send{
-  background: #FFF8E8;
-  color: #0f110c;
+  background: var(--theme-fg);
+  color: var(--theme-bg);
   border: 0;
   border-radius: 10px;
   padding: .6rem .9rem;
@@ -180,6 +320,23 @@ a {
   --cursor-dot-color:#FFF8E8;
   --cursor-size:75px;          /* ring Ø when idle */
   --cursor-font-size:15px;     /* letter size idle */
+
+  /* theme palette (default look) */
+  --theme-bg:#0f110c;
+  --theme-fg:#FFF8E8;
+
+  /* general site text + icons (name, projects, about, skills...) */
+  --content-fg:#FFF8E8;
+}
+
+html[data-theme="a"]{ --theme-bg:#bfb8ad; --theme-fg:#441813; }
+html[data-theme="b"]{ --theme-bg:#ebcfb2; --theme-fg:#424B54; --content-fg:#000; }
+html[data-theme="c"]{ --theme-bg:#cf5c36; --theme-fg:#000022; }
+html[data-theme="d"]{ --theme-bg:#f2e9dc; --theme-fg:#0094c6; --content-fg:#000; }
+
+html[data-theme] .cursor-follower{
+  --cursor-ring-color: var(--theme-fg);
+  --cursor-dot-color: var(--theme-fg);
 }
 
 .cursor-follower {
@@ -220,7 +377,8 @@ a {
   position:fixed;
   inset:0;
   z-index:-1;
-  background:#0f110c radial-gradient(#575A5E 1px,transparent 1px) 0/18px 18px;
+  background:var(--theme-bg) radial-gradient(color-mix(in srgb, var(--theme-fg) 35%, transparent) 1px,transparent 1px) 0/18px 18px;
+  transition: background-color .3s ease;
 }
 
 
@@ -264,10 +422,11 @@ display: block!important;
   align-items: flex-end;
   width: 50%;
   overflow-y: auto;
-  color: #FFF8E8;
+  color: var(--content-fg);
   box-sizing: border-box;
   text-align: right;
   overflow-x: visible;
+  transition: color .3s ease;
 }
 
   .container{
@@ -329,25 +488,36 @@ display: block!important;
   .socials{
     height: 1.8rem;
     font-size: 1.8rem; /* ⬆️ Try 2rem, 2.5rem, or even px like 32px */
-    color: #FFF8E8;   /* make sure it's visible if needed */
+    color: var(--content-fg);   /* make sure it's visible if needed */
     margin: 0 0.3rem; /* optional spacing between icons */
+    transition: color .3s ease;
   }
 
   /*================ right side====================*/
-  
+
   .icon {
     height: 2rem;
     font-size: 2rem; /* ⬆️ Try 2rem, 2.5rem, or even px like 32px */
-    color: #FFF8E8;   /* make sure it's visible if needed */
+    color: var(--content-fg);   /* make sure it's visible if needed; also colors the JS/HTML/CSS logos via currentColor */
     margin: 0 0.3rem; /* optional spacing between icons */
     flex-shrink: 0;
+    transition: color .3s ease;
   }
 
   .icon-wrapper{
     position:relative;          /* positioning context for tooltip */
     display:inline-block;       /* keeps width = icon width */
   }
-  
+
+  /* swap the raster Python/C++ logos for black silhouettes on the black-text themes */
+  .icon-black{ display:none; }
+
+  html[data-theme="b"] .icon-color,
+  html[data-theme="d"] .icon-color{ display:none; }
+
+  html[data-theme="b"] .icon-black,
+  html[data-theme="d"] .icon-black{ display:inline-block; }
+
   /* hidden tooltip */
   .icon-wrapper::after{
     content:attr(data-label);
@@ -377,7 +547,7 @@ display: block!important;
   .project{
     font-size: 1.2rem; /* ⬆️ Try 2rem, 2.5rem, or even px like 32px */
     flex-shrink: 0;
-    color: #FFF8E8;
+    color: var(--content-fg);
   }
 
 
@@ -406,8 +576,9 @@ display: block!important;
     flex-direction: column;
     padding: 2rem;
     box-sizing: border-box;
-    color: #FFF8E8;
+    color: var(--content-fg);
     gap: 1rem;
+    transition: color .3s ease;
   }
   
 /* cards column already has z-index:3 – just add position */
@@ -467,7 +638,7 @@ display: block!important;
 }
 
 .preview-label {
-  color: #FFF8E8;
+  color: var(--theme-fg);
   font-style: normal;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -518,12 +689,14 @@ display: block!important;
 .preview{
   position:fixed; left:10%; top:8%;
   width:37rem;                /* shrink panel */
+  max-height: 70rem;
   border-radius:12px; overflow:hidden;
-  background:#071108;
-  opacity:0; 
-  transition:opacity .25s, transform .25s;
-  z-index:1000;
-  align-self: center;
+  background: color-mix(in srgb, var(--theme-bg) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, var(--theme-fg) 14%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: background-color .3s ease, border-color .3s ease;
 }
 .preview.show{ opacity:1; transform:none; }
 
@@ -666,9 +839,10 @@ body.scrollbars-always .filter::-webkit-scrollbar-thumb{
 }
 
 .about-title{
-  color: #FFF8E8;
+  color: var(--content-fg);
   font-size: 3rem;
   padding-left: 2rem;
+  transition: color .3s ease;
 }
 
 
@@ -694,8 +868,8 @@ body.scrollbars-always .filter::-webkit-scrollbar-thumb{
 
 /* Reveal-noreveal text =====================================*/
 .text{
-  color: #FFF8E8;
-  display:none;  
+  color: var(--content-fg);
+  display:none;
 }
 .is-visible{
   display:block;
@@ -714,7 +888,7 @@ body.scrollbars-always .filter::-webkit-scrollbar-thumb{
 .option{
   background: transparent;          /* no white fill */
   border: 2px solid transparent;    /* hide default border */
-  color: #FFF8E8;                   /* same ivory you use elsewhere */
+  color: var(--content-fg);
   font-size: 1.2rem;
   padding: .45rem 1rem;
   cursor: none;
@@ -859,8 +1033,8 @@ body.scrollbars-always .filter::-webkit-scrollbar-thumb{
   display: block;
   align-items: center;
 margin-top: 4rem;
- 
-  color:#FFF8E8;
+
+  color: var(--content-fg);
 }
 
 .skills-container-small{
@@ -916,7 +1090,7 @@ display: none;
 
 
 .title-skills{
-  color: #FFF8E8;
+  color: var(--content-fg);
   font-size: 2rem;
   font-weight: 200;
   padding-top: 2rem;
@@ -924,7 +1098,7 @@ display: none;
 }
 
 .title-skills2{
-  color: #FFF8E8;
+  color: var(--content-fg);
   font-size: 2.5rem;
   padding-left: 3rem;
   margin: 0px;
@@ -981,16 +1155,17 @@ li{
   gap: 0.25rem;
   padding: 0.4rem 0.6rem;
 
-  background: rgba(15, 17, 12, 0.72);
+  background: color-mix(in srgb, var(--theme-bg) 72%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 248, 232, 0.14);
+  border: 1px solid color-mix(in srgb, var(--theme-fg) 14%, transparent);
   border-radius: 999px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: background-color .3s ease, border-color .3s ease;
 }
 
 .island-nav__link {
-  color: #FFF8E8;
+  color: var(--theme-fg);
   font-family: inherit;
   font-size: 0.85rem;
   letter-spacing: 0.06em;
@@ -998,16 +1173,16 @@ li{
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   opacity: 0.75;
-  transition: background 0.2s ease, opacity 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease, color .3s ease;
 }
 
 .island-nav__link:hover {
-  background: rgba(255, 248, 232, 0.1);
+  background: color-mix(in srgb, var(--theme-fg) 10%, transparent);
   opacity: 1;
 }
 
 .island-nav__link.is-active {
-  background: rgba(255, 248, 232, 0.12);
+  background: color-mix(in srgb, var(--theme-fg) 12%, transparent);
   opacity: 1;
 }
 /* ========================================================== */
@@ -1019,7 +1194,7 @@ li{
 @media (max-width: 1024px) {
 
   .about-title{
-    color: #FFF8E8;
+    color: var(--content-fg);
     font-size: 3rem;
     padding-left: 2rem;
     margin: 0 0 3rem 0;
@@ -1203,6 +1378,7 @@ min-width: 11rem;
   bottom: 15rem;
   left: auto;
   width:90%;
+  height: inherit;
 }
 
 #prevTitle {
@@ -1217,7 +1393,7 @@ min-width: 11rem;
 #prevDesc {
   font-size: 0.9rem;      /* normal body size */
   line-height: 1.4;     /* more readable spacing */
-  color: #d7d1c1;       /* softer color */
+  color: var(--content-fg);       /* softer color */
   margin-bottom: 0.75rem;
   margin: 0rem 0rem 0.1rem 0rem;
   padding: 0rem 0.8rem 0rem 0.8rem;
@@ -1227,7 +1403,7 @@ min-width: 11rem;
 #prevTools {
   font-size: 0.8rem;    /* a little smaller */
   line-height: 1;
-  color: #aaa;
+  color: var(--theme-fg);
   font-style: italic;
   margin: 0rem 0rem 0.8rem 0rem;
   padding: 0rem 0.8rem 0rem 0.8rem;
