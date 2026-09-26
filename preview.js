@@ -1,95 +1,114 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-  const panel    = document.getElementById('preview');
+  const panel = document.getElementById('preview');
   const closeBtn = document.getElementById('closePreview');
-  const vid      = document.getElementById('prevVid');
-  const titleEl  = document.getElementById('prevTitle');
-  const descEl   = document.getElementById('prevDesc');
-  const toolsEl  = document.getElementById('prevTools');
+  const vid = document.getElementById('prevVid');
+  const title = document.getElementById('prevTitle');
+  const desc = document.getElementById('prevDesc');
+  const tech = document.getElementById('prevTools');
+  if (!panel || !closeBtn || !vid) return;
 
-  const mediaQuery = window.matchMedia('(min-width: 1024px)');
+  const hover = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let activeCard = null;
+  let pinned = false;
+  let hoverTimer;
+  let hideTimer;
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-labelledby', 'prevTitle');
 
-  function isWide() {
-    return mediaQuery.matches;
+  function autoplayAllowed() {
+    return !reducedMotion.matches && !navigator.connection?.saveData;
   }
 
-  function elementsOverlap(el1, el2) {
-    const domRect1 = el1.getBoundingClientRect();
-    const domRect2 = el2.getBoundingClientRect();
-    return !(
-      domRect1.top    > domRect2.bottom ||
-      domRect1.right  < domRect2.left   ||
-      domRect1.bottom < domRect2.top    ||
-      domRect1.left   > domRect2.right
-    );
+  // Preserve the original labeled text treatment without parsing HTML.
+  function renderText(element, text) {
+    element.replaceChildren();
+    const parts = text.split(/(Problem —|Solution —|Impact —|Tech —)/g);
+    parts.forEach(part => {
+      if (/^(Problem|Solution|Impact|Tech) —$/.test(part)) {
+        if ((part === 'Solution —' || part === 'Impact —') && element.childNodes.length) {
+          element.append(document.createElement('br'), document.createElement('br'));
+        }
+        const label = document.createElement('span');
+        label.className = 'preview-label';
+        label.textContent = part;
+        element.append(label);
+      } else element.append(document.createTextNode(part));
+    });
   }
 
-  function formatLabels(text) {
-    if (!text) return '';
-    return text
-      .replace(/(Problem —|Tech —)/g, '<span class="preview-label">$1</span>')
-      .replace(/(Solution —|Impact —)/g, '<br><br><span class="preview-label">$1</span>');
-  }
-
-  function show(card) {
-    titleEl.textContent = card.dataset.title  || '';
-    descEl .innerHTML   = formatLabels(card.dataset.desc   || '');
-    toolsEl.innerHTML   = formatLabels(card.dataset.tools  || '');
-
-    const vidSrc = card.dataset.video;
-    if (vidSrc) {
-      if (vid.src !== vidSrc) {
-        vid.src = vidSrc;
-        vid.load();
-      }
-      vid.style.display = 'block';
-      vid.play().catch(() => {});
-    } else {
+  function show(card, pin = false) {
+    pinned = pin;
+    clearTimeout(hideTimer);
+    activeCard = card;
+    title.textContent = card.dataset.title || '';
+    renderText(desc, card.dataset.desc || '');
+    renderText(tech, card.dataset.tools || '');
+    vid.setAttribute('aria-label', `${title.textContent} demo`);
+    // Attribute comparison avoids comparing an absolute URL with a relative URL.
+    if (vid.getAttribute('src') !== card.dataset.video) {
       vid.pause();
-      vid.style.display = 'none';
+      vid.poster = card.dataset.poster || '';
+      vid.src = card.dataset.video;
+      vid.load();
     }
     panel.classList.add('show');
+    if (autoplayAllowed()) vid.play().catch(() => { /* Native play control remains available. */ });
+    else vid.pause();
   }
 
   function hide() {
+    clearTimeout(hoverTimer);
+    clearTimeout(hideTimer);
     panel.classList.remove('show');
     vid.pause();
+    activeCard = null;
+    pinned = false;
+  }
+
+  function scheduleHide() {
+    clearTimeout(hoverTimer);
+    hideTimer = setTimeout(() => {
+      if (!pinned && !panel.matches(':hover') && !panel.contains(document.activeElement) && !activeCard?.contains(document.activeElement)) hide();
+    }, 250);
   }
 
   document.querySelectorAll('.project-card').forEach(card => {
-    function maybeShow() {
-
-      if (isWide()) show(card);
-    }
-    function maybeHide() {
-      if (isWide()) hide();
-    }
-    card.addEventListener('mouseenter', maybeShow);
-    card.addEventListener('focus', maybeShow);
-    card.addEventListener('mouseleave', maybeHide);
-    card.addEventListener('blur', maybeHide);
-
-
+    card.addEventListener('mouseenter', () => {
+      if (pinned || !hover.matches || !autoplayAllowed()) return;
+      clearTimeout(hideTimer);
+      clearTimeout(hoverTimer);
+      // Avoid fetching demos when the pointer merely passes over a card.
+      hoverTimer = setTimeout(() => show(card), 120);
+    });
+    card.addEventListener('mouseleave', () => { if (hover.matches) scheduleHide(); });
     card.addEventListener('click', () => {
-      if (!isWide()) {
-        panel.classList.contains('show') ? hide() : show(card);
+      clearTimeout(hoverTimer);
+      show(card, true);
+    });
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        show(card, true);
+        if (window.matchMedia('(max-width: 1024px)').matches) closeBtn.focus();
+        else vid.focus();
       }
     });
   });
-
-  closeBtn.addEventListener('click', hide);
-  panel.addEventListener('click', e => {
-    if (e.target === panel) hide();
+  panel.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+  panel.addEventListener('mouseleave', () => { if (hover.matches) scheduleHide(); });
+  closeBtn.addEventListener('click', () => {
+    const card = activeCard;
+    hide();
+    card?.focus();
   });
-
-  function handleMediaChange(e) {
-    if (!e.matches && panel.classList.contains('show')) {
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && activeCard) {
+      const card = activeCard;
       hide();
+      card.focus();
     }
-  }
-  if (typeof mediaQuery.addEventListener === 'function') {
-    mediaQuery.addEventListener('change', handleMediaChange);
-  } else if (typeof mediaQuery.addListener === 'function') {
-    mediaQuery.addListener(handleMediaChange);
-  }
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) hide(); });
+  hover.addEventListener('change', hide);
 });

@@ -80,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!body || !messages || !input || !sendBtn) return;
 
+  let history = [];
+  let sending = false;
   let hintRemoved = false;
   let dotsInterval = null;
 
@@ -137,37 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typing) typing.remove();
   }
 
-  // ----- Typewriter Effect (when reply arrives) -----
-  function typeMessage(text, speed = 15) {
-    if (!hintRemoved) {
-      const hint = messages.querySelector(".chat-hint");
-      if (hint) hint.remove();
-      hintRemoved = true;
-    }
-
-    const div = document.createElement("div");
-    div.className = "chat-message bot";
-    div.textContent = "";
-    messages.appendChild(div);
-    scrollToBottom();
-
-    let i = 0;
-
-    function step() {
-      if (i < text.length) {
-        div.textContent += text.charAt(i);
-        i++;
-        scrollToBottom();
-        setTimeout(step, speed);
-      }
-    }
-
-    step();
-  }
-
   async function sendMessage() {
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || sending) return;
+    if (text.length > 2000) {
+      appendMessage("Please keep your question under 2,000 characters.", "bot");
+      return;
+    }
+    sending = true;
 
     input.value = "";
     appendMessage(text, "user");
@@ -180,43 +159,33 @@ document.addEventListener("DOMContentLoaded", () => {
       ? "http://localhost:3001/api/chat"
       : "https://sergiowork.onrender.com/api/chat";
 
-    // sanity check: log which URL is being used and that the request is firing
-    console.log("[sanity] hostname:", window.location.hostname);
-    console.log("[sanity] API_URL:", API_URL);
-    console.log("[sanity] sending message:", text);
-
     try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: text, history }),
+        signal: AbortSignal.timeout(45000),
       });
 
-      // sanity check: log what the server returned
-      console.log("[sanity] response status:", res.status, res.statusText);
-
       if (!res.ok) {
-        // sanity check: log the raw response body on failure
-        const errBody = await res.text();
-        console.error("[sanity] server returned non-ok response body:", errBody);
-        throw new Error("Server error");
+        throw new Error(res.status === 429
+          ? "Too many questions right now. Please try again later or email Sergio at srgl1179@gmail.com."
+          : "The assistant is temporarily unavailable. Try again or contact Sergio at srgl1179@gmail.com.");
       }
-
       const data = await res.json();
-
-      // sanity check: confirm we got a reply field back
-      console.log("[sanity] reply received:", data.reply ? `${data.reply.slice(0, 60)}...` : "(empty)");
-
-
+      if (typeof data.reply !== "string" || !data.reply.trim()) throw new Error("The assistant returned an empty reply. Please try again.");
+      history.push({ role: "user", content: text }, { role: "assistant", content: data.reply });
+      history = history.slice(-8);
+      while (history.length && history.reduce((sum, item) => sum + item.content.length, 0) > 12000) history.splice(0, 2);
       removeTypingIndicator();
-      typeMessage(data.reply, 15);
-
+      appendMessage(data.reply, "bot");
     } catch (err) {
-      // sanity check: log the full error so we know exactly what broke
-      console.error("[sanity] fetch failed:", err.message, err);
       removeTypingIndicator();
-      appendMessage("Sorry, something went wrong. Try again later.", "bot");
+      appendMessage(err.name === "TimeoutError" || err.name === "TypeError"
+        ? "The assistant could not connect. Please retry or email Sergio at srgl1179@gmail.com."
+        : err.message, "bot");
     } finally {
+      sending = false;
       setLoading(false);
       input.focus();
     }

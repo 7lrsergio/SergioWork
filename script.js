@@ -25,7 +25,7 @@
 
   // ② on hover in: swap text *and* bump sizes
   document.addEventListener('mouseenter', e => {
-    const el = e.target.closest('[data-cursor]');
+    const el = e.target.closest?.('[data-cursor]');
     if (!el) return;
 
     cursorText.textContent = el.dataset.cursor;
@@ -36,7 +36,7 @@
 
   // ③ on hover out: restore both
   document.addEventListener('mouseleave', e => {
-    if (!e.target.closest('[data-cursor]')) return;
+    if (!e.target.closest?.('[data-cursor]')) return;
 
     cursorText.textContent = defaultMsg;
 

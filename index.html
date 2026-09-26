@@ -29,12 +29,12 @@
 
     <div class="chat-body" aria-live="polite" aria-relevant="additions text">
       <div class="chat-messages" id="chatMessages">
-        <p class="chat-hint">Ask me about Sergio’s projects or skills.</p>
+        <p class="chat-hint">Ask me about Sergio’s projects, skills, or fit for your team. Try “Should I hire Sergio?”</p>
       </div>
     </div>
 
     <div class="chat-footer">
-      <input class="chat-input" placeholder="Type..." />
+      <input class="chat-input" placeholder="Ask about Sergio…" maxlength="2000" aria-label="Ask about Sergio" />
       <button class="chat-send">Send</button>
     </div>
   </div>
@@ -165,67 +165,106 @@
 <!-- 2 | All project cards -->
 <div class="cards-wrapper">
 
-   <aside id="preview" class="preview">
+  <aside id="preview" class="preview">
     <button id="closePreview" aria-label="close preview" class="closePreview">✕</button>
-     <video id="prevVid" class="preview-player" muted loop playsinline></video>
-     <h3  id="prevTitle"></h3>
-     <p   id="prevDesc"></p>
-     <p   id="prevTools" class="tools"></p>
-   </aside>
+    <video id="prevVid" class="preview-player" muted loop playsinline controls preload="none"></video>
+    <h3 id="prevTitle"></h3>
+    <p id="prevDesc"></p>
+    <p id="prevTools" class="tools"></p>
+  </aside>
 
 
-   <div class="project-card"
-   data-title="SLANDS"
-   data-desc="Problem — Local small businesses often lack strong digital tools or websites, making it difficult for them to compete online. Solution — student startup focused on designing websites and software tools for local businesses, applying real engineering skills to real-world client problems. Impact — Helped local businesses improve their online presence and digital systems while gaining hands-on experience with real clients and production requirements."
-   data-tools="Tech — HTML, CSS, JavaScript, API Integrations, Responsive Web Design."
-   data-video="./img/slands2.mp4">
- <h3>SLANDS</h3>
- </div>
+  <!-- AI Voice Receptionist -->
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="AI Voice Receptionist"
+       data-desc="Architected a call-handling pipeline where Twilio routes inbound calls to a Retell AI voice agent, with post-call events processed by a Python/Flask webhook server deployed on Render. Added webhook signature verification, rate limiting, input validation, and automated structured lead summaries with SMS notifications to the business owner."
+       data-tools="Tech — Python, Flask, Twilio, Retell AI, n8n, Render, Webhooks, HMAC."
+       data-video="./img/optimized/redTrucking.mp4"
+       data-poster="./img/optimized/redTrucking.jpg">
+    <h3>AI Voice Receptionist</h3>
+  </div>
 
 
- <div class="project-card"
-data-title="Casa Döner — Restaurant Website & Online Ordering"
-data-desc="Problem — The restaurant had great food but no online presence and relied on third-party delivery platforms that charged high commission fees. Solution — Built a mobile-first website and integrated it directly with the restaurant’s Clover ordering system, allowing customers to order through the business’s own platform. Impact — Improved the restaurant’s online visibility and reduced reliance on expensive third-party delivery platforms by enabling direct customer ordering."
-data-tools="Tech — HTML, CSS, JavaScript, Clover Ordering System Integration, Responsive Web Design."
-data-video="./img/CasaDöners.mp4">
-<h3>Casa Döner website</h3>
-</div>
+  <!-- Casa Döner -->
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="Casa Döner — Restaurant Website & Online Ordering"
+       data-desc="Built a mobile-first restaurant website with direct online ordering to reduce reliance on third-party delivery platforms. Integrated the site with the restaurant’s existing Clover ordering system, giving customers a direct path to place orders while helping the business retain more revenue from online sales."
+       data-tools="Tech — HTML, CSS, JavaScript, Clover Integration, Responsive Web Design."
+       data-video="./img/optimized/CasaDöners.mp4"
+       data-poster="./img/optimized/CasaDöners.jpg">
+    <h3>Casa Döner — Online Ordering</h3>
+  </div>
+
+
+  <!-- BarberStudio05 -->
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="Booking System — BarberStudio05"
+       data-desc="Designed an n8n webhook workflow that syncs appointments with Outlook Calendar, using the calendar as the single source of truth for the initial version. Structured the scheduling layer to support future database integration and multi-barber scheduling without rebuilding the application. Automated availability and booking workflows, reducing manual appointment coordination by roughly 2 hours per week while keeping infrastructure costs below $20/month."
+       data-tools="Tech — JavaScript, n8n, Outlook Calendar, REST APIs."
+       data-video="./img/optimized/barberstudio05.mp4"
+       data-poster="./img/optimized/barberstudio05.jpg">
+    <h3>Booking System — BarberStudio05</h3>
+  </div>
+
+
+  <!-- Concert Companion -->
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="Concert Companion — Hackathon"
+       data-desc="Built a live social feed for concert attendees to share event updates, photos, and GIFs during a 24-hour hackathon. Implemented report deduplication using Jaccard similarity on token sets to group similar user reports, and built pinned admin announcements that automatically expire after 10 minutes."
+       data-tools="Tech — Next.js, React, JavaScript, Git, MySQL, Jaccard Similarity."
+       data-video="./img/optimized/concertcompanion.mp4"
+       data-poster="./img/optimized/concertcompanion.jpg">
+    <h3>Concert Companion — Hackathon</h3>
+  </div>
+
+
  
-   <!-- Barber -->
-   <div class="project-card"
-   data-title="Booking System — BarberStudio05"
-   data-desc="Built an automated booking system that reduced manual appointment coordination by roughly 2 hours per week while keeping infrastructure costs below $20/month. Designed the backend to minimize third-party dependencies and support future database integration and multi-barber expansion."
-   data-tools="Tech — JavaScript, n8n, REST APIs."
-   data-video="./img/barberstudio05.mp4">
-   <h3>Booking System — BarberStudio05</h3>
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="Python Game"
+       data-desc="Built and ported a sprite-based game from Java to Python/Pygame using an MVC-style architecture, polymorphic entities, a factory pattern, collision detection, projectile physics, JSON persistence, and a built-in map editor. Added deterministic regression tests to verify movement, collisions, catching mechanics, save/load behavior, and compatibility with the original Java implementation."
+       data-tools="Tech — Python, Pygame, OOP, MVC, Factory Pattern, JSON Persistence, Collision Detection, Deterministic Testing."
+       data-video="./img/optimized/pokemon.mp4"
+       data-poster="./img/optimized/pokemon.jpg">
+    <h3>Verdant Valley — Python Game</h3>
+  </div>
+
+
+  <!-- Weather App -->
+  <div class="project-card"
+       tabindex="0"
+       role="button"
+       aria-haspopup="dialog"
+       data-title="Weather App — Planning Tool"
+       data-desc="Built a weather application that retrieves current weather and forecast data through the OpenWeather API and presents the information in a simple interface for daily planning. Used API integration and frontend development to turn external weather data into a functional web application."
+       data-tools="Tech — JavaScript, OpenWeather API, HTML, CSS."
+       data-video="./img/optimized/wheaterapp.mp4"
+       data-poster="./img/optimized/wheaterapp.jpg">
+    <h3>Weather App</h3>
+  </div>
+
 </div>
 
-
-    <!-- Weather App -->
-    <div class="project-card"
-    data-title="Weather App — Planning Tool"
-    data-desc="Problem — Daily planning requires quickly checking weather conditions that can affect schedules, commuting, or important events. Solution — Built a weather application that retrieves real-time forecast data and highlights key information relevant for daily planning. Impact — Improved personal morning planning by quickly surfacing relevant weather information that could affect daily activities."
-    data-tools="Tech — JavaScript, OpenWeather API Integration, Frontend Web Development."
-    data-video="./img/wheaterapp.mp4">
- <h3>WeatherApp</h3>
-</div>
-
-
-<div class="project-card"
-data-title="Pokémon-Inspired Game — Passion Project"
-data-desc="Building a Pokémon-inspired game in Python to strengthen object-oriented programming, game logic, and problem-solving skills. Implemented core systems such as character interactions, battles, game state, and reusable classes while expanding the project as my Python skills improve."
-data-tools="Tech — Python, Object-Oriented Programming, Encapsulation, Polymorphism."
-data-video="./img/pokemon.mp4">
-<h3>Pokémon-Inspired Game</h3>
-</div>
-
- <h3>Next Project</h3>
-</div>
-<div class="project-card"
+<!-- <div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
 data-title="More Projects Coming Soon"
 data-desc="I’m always building and experimenting. New projects are in progress and will be added here shortly."
 data-tools="Stay tuned for fresh updates and demos"
-data-video="./img/more.mp4">
+data-video="./img/optimized/more.mp4" data-poster="./img/optimized/more.jpg">
+<h3>More Projects Coming Soon</h3> -->
 </div>
 </div>
 
@@ -404,7 +443,7 @@ data-video="./img/more.mp4">
       
     </div>
     
-    <div class="skills box end">
+    <!-- <div class="skills box end">
     
       <h1 class="title-skills">My biggest takeaways</h1>
       <h1 class="title-skills2">Starbucks Coffee Company</h1>
@@ -432,7 +471,7 @@ data-video="./img/more.mp4">
           </ul>
       </div>
       
-    </div>
+    </div> -->
   </div>
 
 

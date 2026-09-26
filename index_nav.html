@@ -29,12 +29,12 @@
 
     <div class="chat-body" aria-live="polite" aria-relevant="additions text">
       <div class="chat-messages" id="chatMessages">
-        <p class="chat-hint">Ask me about Sergio’s projects or skills.</p>
+        <p class="chat-hint">Ask me about Sergio’s projects, skills, or fit for your team. Try “Should I hire Sergio?”</p>
       </div>
     </div>
 
     <div class="chat-footer">
-      <input class="chat-input" placeholder="Type..." />
+      <input class="chat-input" placeholder="Ask about Sergio…" maxlength="2000" aria-label="Ask about Sergio" />
       <button class="chat-send">Send</button>
     </div>
   </div>
@@ -168,57 +168,56 @@
 
    <aside id="preview" class="preview">
     <button id="closePreview" aria-label="close preview" class="closePreview">✕</button>
-     <video id="prevVid" class="preview-player" muted loop playsinline></video>
+     <video id="prevVid" class="preview-player" muted loop playsinline controls preload="none"></video>
      <h3  id="prevTitle"></h3>
      <p   id="prevDesc"></p>
      <p   id="prevTools" class="tools"></p>
    </aside>
 
 
-   <div class="project-card"
+   <div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
    data-title="SLANDS"
    data-desc ="I’ve teamed up with classmates to launch a startup that builds websites and software for local businesses. Our goal is to apply our skills to create real impact while gaining hands-on experience and helping cover our college expenses."
    data-tools="We accomplish bettering our skill and job oppornities, by helping local business improve digital precense, systems, and profit margings"
-   data-video="./img/slands2.mp4">
+   data-video="./img/optimized/slands2.mp4" data-poster="./img/optimized/slands2.jpg">
  <h3>SLANDS</h3>
  </div>
 
 
 
- <div class="project-card"
+ <div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
 data-title="Casa Döner website + online order"
 data-desc="One of our projects from SLANDS, The restaurant didn't have online presence but the food is amazing + they were loosing money for online order commissions. so we build a online website with the online page connected directly to their Clover Order system"
 data-tools="Reduced third-party commission costs by building a mobile-first e-commerce website and integrating directly with Clover’s ordering system using HTML, CSS, and JavaScript."
-data-video="./img/CasaDöners.mp4">
+data-video="./img/optimized/CasaDöners.mp4" data-poster="./img/optimized/CasaDöners.jpg">
 <h3>Casa Döner website + online order</h3>
 </div>
  
    <!-- Barber -->
-   <div class="project-card"
+   <div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
    data-title="Booking System — BarberStudio05"
    data-desc="Built an automated booking system that reduced manual appointment coordination by roughly 2 hours per week while keeping infrastructure costs below $20/month. Designed the backend to minimize third-party dependencies and support future database integration and multi-barber expansion."
    data-tools="Tech — JavaScript, n8n, REST APIs."
-   data-video="./img/barberstudio05.mp4">
+   data-video="./img/optimized/barberstudio05.mp4" data-poster="./img/optimized/barberstudio05.jpg">
    <h3>Booking System — BarberStudio05</h3>
 </div>
 
 
     <!-- Weather App -->
-    <div class="project-card"
+    <div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
     data-title="Weather App (Debugging)"
     data-desc ="Project of my own thought to learn and to help me have a better my morning system. i was trying to make improvements, i didnt go as planned for now, i will update the debugged version soon Feb 2026"
     data-tools="This improved my morning system and and became more prepared/ i accomplished that by getting information about tomorrow and the relevant thing that can affect my timing/ important dates tomorrow, weather "
-    data-video="./img/wheaterapp.mp4">
+    data-video="./img/optimized/wheaterapp.mp4" data-poster="./img/optimized/wheaterapp.jpg">
  <h3>WeatherApp</h3>
 </div>
 
- <h3>Next Project</h3>
-</div>
-<div class="project-card"
+<div class="project-card" tabindex="0" role="button" aria-haspopup="dialog"
 data-title="More Projects Coming Soon"
 data-desc="I’m always building and experimenting. New projects are in progress and will be added here shortly."
 data-tools="Stay tuned for fresh updates and demos"
-data-video="./img/more.mp4">
+data-video="./img/optimized/more.mp4" data-poster="./img/optimized/more.jpg">
+<h3>More Projects Coming Soon</h3>
 </div>
 </div>
 
